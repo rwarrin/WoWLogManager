@@ -24,13 +24,15 @@ int main(int argc, char * argv[]) {
 	if(config.fail()) {
 		cout << "Failed to open 'config'.  Terminating application\n";
 		cout << "Please make sure the file exists in the same directory as the application.\n";
+		cout << "Press ENTER to quit.\n";
 		cin.get();
 		return 1;
 	}
 
 	config.getline(configpath, 256, '\n');
+	config.close();
 
-	cout << "Using path: " << configpath << endl;
+	cout << "Using path:\n\t" << configpath << "\n\n";
 
 	strcpy(inputfilepath, configpath);
 	strcpy(outputpath, configpath);
@@ -38,11 +40,20 @@ int main(int argc, char * argv[]) {
 	strcat(inputfilepath, "WoWCombatLog.txt");
 	strcat(outputpath, filename);
 
+	ifstream combatlog;
+	combatlog.open(inputfilepath);
+
+	if(combatlog.fail()) {
+		cout << "Could not find a combat log at:\n\t" << inputfilepath << "\n\n";
+	}
+	combatlog.close();
+
 	if(CopyFile(inputfilepath, outputpath, false) != 0) {
-		cout << "Successfully created new combat log! \n " << outputpath << endl;
+		cout << "Successfully created new combat log! \n\t" << outputpath << "\n\n";
 	}
 	else {
-		cout << "Failed to create new combat log!  Error " << GetLastError() << endl;
+		cout << "Failed to create new combat log!\n\tError " << GetLastError() << "\n\n";
+		cout << "Press ENTER to quit.\n";
 		cin.get();
 		return 1;
 	}
@@ -50,7 +61,7 @@ int main(int argc, char * argv[]) {
 	cout << "Deleting old combat log.\n";
 	DeleteFile(inputfilepath);
 
-	cout << "Press ENTER to close.\n";
+	cout << "Press ENTER to quit.\n";
 	cin.get();
 	return 0;
 }
