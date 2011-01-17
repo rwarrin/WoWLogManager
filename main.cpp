@@ -22,13 +22,15 @@ int main(int argc, char * argv[]) {
 	config.open("config");
 
 	if(config.fail()) {
-		printf("Failed to open 'config'.  Terminating application\n");
-		printf("Please make sure the file exists in the same directory as the application.\n");
+		cout << "Failed to open 'config'.  Terminating application\n";
+		cout << "Please make sure the file exists in the same directory as the application.\n";
 		cin.get();
 		return 1;
 	}
 
 	config.getline(configpath, 256, '\n');
+
+	cout << "Using path: " << configpath << endl;
 
 	strcpy(inputfilepath, configpath);
 	strcpy(outputpath, configpath);
@@ -37,15 +39,18 @@ int main(int argc, char * argv[]) {
 	strcat(outputpath, filename);
 
 	if(CopyFile(inputfilepath, outputpath, false) != 0) {
-		printf("\nSuccessfully created new combat log!\n");
+		cout << "Successfully created new combat log! \n " << outputpath << endl;
 	}
 	else {
-		printf("\nFailed to create new combat log!  Error %d", GetLastError());
+		cout << "Failed to create new combat log!  Error " << GetLastError() << endl;
 		cin.get();
 		return 1;
 	}
 
+	cout << "Deleting old combat log.\n";
 	DeleteFile(inputfilepath);
 
+	cout << "Press ENTER to close.\n";
+	cin.get();
 	return 0;
 }
