@@ -59,7 +59,15 @@ int main(int argc, char * argv[]) {
 	}
 
 	cout << "Deleting old combat log.\n";
-	DeleteFile(inputfilepath);
+	int deleteSuccess = NULL;
+	deleteSuccess = DeleteFile(inputfilepath);
+
+	if(deleteSuccess != 0) {
+		cout << "Successfully deleted old combatlog.\n";
+	}
+	else {
+		cout << "Failed to delete old combatlog.  You need to delete it yourself.\n";
+	}
 
 	cout << "Press ENTER to quit.\n";
 	cin.get();
