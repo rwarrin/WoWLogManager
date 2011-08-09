@@ -6,7 +6,7 @@
 
 using namespace std;
 
-int main(int argc, char * argv[]) {
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR lpcmdline, int ncmdshow) {
 	time_t timeNow;
 	struct tm *ts;
 	char outputpath[256];
