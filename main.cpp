@@ -43,7 +43,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR lpcmdline, int ncmdshow) {
 		strcat(errorMessage, inputfilepath);
 		strcat(errorMessage, "'.");
 		MessageBox(NULL, errorMessage, "Error", MB_ICONWARNING | MB_OK);
+		combatlog.close();
+		return 1;
 	}
+
 	combatlog.close();
 
 	if(CopyFile(inputfilepath, outputpath, false) != 0) {
